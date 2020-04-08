@@ -19,7 +19,6 @@ struct ArrayResource<T: Codable> {
         observer.onError(CustomError(value: "Can't map response."))
         return Disposables.create()
       }
-
       observer.onNext(result)
       return Disposables.create()
     }

@@ -23,8 +23,8 @@ class TablesCell: UITableViewCell {
     
     func configureWith(_ viewModel: TablesCellViewModelType) {
         
-        countryLbl.text = viewModel.countryLbl
-        amountLbl.text = viewModel.amountLbl
+        countryLbl.text = viewModel.country
+        amountLbl.text = viewModel.amount
         layoutIfNeeded()
     }
 

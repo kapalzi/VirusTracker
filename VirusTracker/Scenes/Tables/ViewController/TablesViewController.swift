@@ -23,53 +23,25 @@ class TablesViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        bindTotalTableView()
-        bindDeathsTableView()
-        bindRecoveredTableView()
+       
+        bindTable(totalTableView, withDriver: viewModel.totalCellViewModelsDriver)
+        bindTable(deathsTableView, withDriver: viewModel.deathsCellViewModelsDriver)
+        bindTable(recoveredTableView, withDriver: viewModel.recoveredCellViewModelsDriver)
     }
-
-    private func bindTotalTableView() {
+    
+    private func bindTable(_ tableView: UITableView, withDriver driver: Driver<[TablesCellViewModelType]>) {
         
-        viewModel.totalCellViewModelsDriver
-            .drive(totalTableView.rx.items) { tableView, row, viewModel in
+        driver
+            .drive(tableView.rx.items) { tableView, row, viewModel in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell") as! TablesCell
                 cell.configureWith(viewModel)
                 return cell
             }
             .disposed(by: disposeBag)
         
-        totalTableView.rx.setDelegate(self)
+        tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
-    
-    private func bindDeathsTableView() {
-        
-        viewModel.deathsCellViewModelsDriver
-            .drive(deathsTableView.rx.items) { tableView, row, viewModel in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell") as! TablesCell
-                cell.configureWith(viewModel)
-                return cell
-            }
-            .disposed(by: disposeBag)
-        
-        deathsTableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-    }
-    
-        private func bindRecoveredTableView() {
-            
-            viewModel.recoveredCellViewModelsDriver
-                .drive(recoveredTableView.rx.items) { tableView, row, viewModel in
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell") as! TablesCell
-                    cell.configureWith(viewModel)
-                    return cell
-                }
-                .disposed(by: disposeBag)
-            
-            recoveredTableView.rx.setDelegate(self)
-                .disposed(by: disposeBag)
-        }
-
 }
 
 extension TablesViewController: UITableViewDelegate {

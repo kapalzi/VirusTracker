@@ -1,5 +1,5 @@
 //
-//  TableEntry.swift
+//  TablesCellViewModelType.swift
 //  VirusTracker
 //
 //  Created by Krzysztof Kapała on 07/04/2020.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct TableEntry {
+protocol TablesCellViewModelType {
     
-    let country: String
-    let amount: String
+    var country: String { get }
+    var amount: String { get }
 }

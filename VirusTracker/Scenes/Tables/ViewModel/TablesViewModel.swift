@@ -22,7 +22,7 @@ class TablesViewModel: TablesViewModelType {
                     $0.totalConfirmed > $1.totalConfirmed
                 }
                 .map {
-                    TablesCellViewModel(TableEntry(country: $0.country, amount: "\($0.totalConfirmed)"))
+                    TablesCellViewModel(withCountry: $0.country, andAmount: "\($0.totalConfirmed)")
                 }
             }
     }
@@ -34,7 +34,7 @@ class TablesViewModel: TablesViewModelType {
                     $0.totalDeaths > $1.totalDeaths
                 }
                 .map {
-                    TablesCellViewModel(TableEntry(country: $0.country, amount: "\($0.totalDeaths)"))
+                    TablesCellViewModel(withCountry: $0.country, andAmount: "\($0.totalDeaths)")
                 }
             }
     }
@@ -45,7 +45,7 @@ class TablesViewModel: TablesViewModelType {
                     $0.totalRecovered > $1.totalRecovered
                 }
                 .map {
-                    TablesCellViewModel(TableEntry(country: $0.country, amount: "\($0.totalRecovered)"))
+                    TablesCellViewModel(withCountry: $0.country, andAmount: "\($0.totalRecovered)")
                 }
             }
     }
@@ -78,14 +78,9 @@ class TablesViewModel: TablesViewModelType {
         downloadData()
     }
     
-    func bindToSummary() {
-        
-        
-    }
-    
     func downloadData() {
         
-        return service
+         service
             .load(SingleItemResource<Summary>(action: BasicAction.summary))
             .subscribe(dataSubject)
             .disposed(by: disposeBag)
