@@ -10,7 +10,7 @@
         <!--Tables View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="TablesViewController" customModule="VirusTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TablesViewController" id="BYZ-38-t0r" customClass="TablesViewController" customModule="VirusTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="1080" height="810"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -203,10 +203,49 @@
             </objects>
             <point key="canvasLocation" x="138.88888888888889" y="138.5185185185185"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="1Af-Ng-rKT">
+            <objects>
+                <viewController storyboardIdentifier="MapViewController" id="Z4j-Ea-6WD" customClass="MapViewController" customModule="VirusTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wqi-fG-B2J">
+                        <rect key="frame" x="0.0" y="0.0" width="1080" height="810"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Awr-EL-mOT">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="810"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="nRt-nm-f9g"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Rp3-64-UAc" kind="embed" id="5xh-JQ-uzb"/>
+                                </connections>
+                            </containerView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="r2F-d3-9h6">
+                                <rect key="frame" x="108" y="0.0" width="972" height="810"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Awr-EL-mOT" firstAttribute="top" secondItem="CT1-Kx-6vB" secondAttribute="top" id="3Fo-88-ROv"/>
+                            <constraint firstItem="Awr-EL-mOT" firstAttribute="bottom" secondItem="CT1-Kx-6vB" secondAttribute="bottom" id="IUQ-rC-eKR"/>
+                            <constraint firstItem="r2F-d3-9h6" firstAttribute="leading" secondItem="Awr-EL-mOT" secondAttribute="trailing" constant="8" id="S3F-Jn-lcc"/>
+                            <constraint firstItem="r2F-d3-9h6" firstAttribute="top" secondItem="CT1-Kx-6vB" secondAttribute="top" id="VJN-m7-SjW"/>
+                            <constraint firstItem="Awr-EL-mOT" firstAttribute="leading" secondItem="CT1-Kx-6vB" secondAttribute="leading" id="auH-zq-YSH"/>
+                            <constraint firstItem="r2F-d3-9h6" firstAttribute="bottom" secondItem="CT1-Kx-6vB" secondAttribute="bottom" id="i0W-OT-1gu"/>
+                            <constraint firstItem="r2F-d3-9h6" firstAttribute="trailing" secondItem="CT1-Kx-6vB" secondAttribute="trailing" id="iS7-Sg-Vrp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CT1-Kx-6vB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4xL-6U-oua" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138.88888888888889" y="915.55555555555554"/>
+        </scene>
         <!--Menu-->
         <scene sceneID="mc7-PM-nDp">
             <objects>
-                <viewController title="Menu" id="Rp3-64-UAc" customClass="MenuViewController" customModule="VirusTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" title="Menu" id="Rp3-64-UAc" customClass="MenuViewController" customModule="VirusTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oZb-Xx-rFJ">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="810"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -274,7 +313,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3pA-q6-aYu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-253.33333333333331" y="138.5185185185185"/>
+            <point key="canvasLocation" x="757" y="488"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="5xh-JQ-uzb"/>
+    </inferredMetricsTieBreakers>
 </document>

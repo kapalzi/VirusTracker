@@ -10,20 +10,24 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class TablesViewController: UIViewController {
+class TablesViewController: UIViewController, BindableType {
 
     @IBOutlet var menuTableView: UITableView!
     @IBOutlet var totalTableView: UITableView!
     @IBOutlet var deathsTableView: UITableView!
     @IBOutlet var recoveredTableView: UITableView!
     
+    var viewModel: TablesViewModelType!
+    
     private let disposeBag = DisposeBag()
-    private let viewModel: TablesViewModelType = TablesViewModel(BasicNetworkService())
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-       
+    }
+    
+    func bindViewModel() {
+        
         bindTable(totalTableView, withDriver: viewModel.totalCellViewModelsDriver)
         bindTable(deathsTableView, withDriver: viewModel.deathsCellViewModelsDriver)
         bindTable(recoveredTableView, withDriver: viewModel.recoveredCellViewModelsDriver)
