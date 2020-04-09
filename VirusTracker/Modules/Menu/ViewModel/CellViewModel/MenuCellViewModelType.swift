@@ -10,6 +10,5 @@ import Foundation
 
 protocol MenuCellViewModelType: class {
     
-    var imageName: String { get }
     var title: MenuTitle { get }
 }

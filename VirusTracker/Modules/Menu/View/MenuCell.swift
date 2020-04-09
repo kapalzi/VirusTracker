@@ -36,8 +36,8 @@ class MenuCell: UITableViewCell {
     func configureWith(_ model: MenuCellViewModelType) {
         
         viewModel = model
-        iconImageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
-        titleLbl.text = viewModel.title.getTitle()
+        iconImageView.image = model.title.image.withRenderingMode(.alwaysTemplate)
+        titleLbl.text = viewModel.title.title
         selectionStyle = .none
         
         layoutIfNeeded()

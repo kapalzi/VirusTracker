@@ -16,9 +16,9 @@ class SceneCoordinator: SceneCoordinatorType {
     fileprivate var currentViewController: UIViewController
     var lastContainer: UIViewController? = nil
 
-    required init(window: UIWindow) {
-        self.window = window
-        currentViewController = window.rootViewController!
+    required init() {
+        self.window = UIWindow()
+        currentViewController = UIViewController()
     }
 
     static func actualViewController(for viewController: UIViewController) -> UIViewController {
@@ -61,13 +61,13 @@ class SceneCoordinator: SceneCoordinatorType {
             
             case .container:
                 
-                guard let menuViewController = currentViewController as? MenuViewController else { fatalError("dupa") }
-                
-                if let visibleContainer = lastContainer {
-                    menuViewController.containerView = nil
-                    visibleContainer.removeFromParent()
-                    visibleContainer.view.removeFromSuperview()
-                }
+//                guard let menuViewController = currentViewController as? MenuViewController else { fatalError("dupa") }
+//                
+//                if let visibleContainer = lastContainer {
+//                    menuViewController.containerView = nil
+//                    visibleContainer.removeFromParent()
+//                    visibleContainer.view.removeFromSuperview()
+//                }
                 lastContainer = viewController
                 currentViewController.addChild(viewController)
                 currentViewController = SceneCoordinator.actualViewController(for: viewController)

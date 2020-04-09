@@ -6,7 +6,7 @@
 //  Copyright © 2020 Krzysztof Kapala. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum MenuTitle: String {
     case tables = "Tables"
@@ -14,20 +14,34 @@ enum MenuTitle: String {
     case charts = "Charts"
     case faq = "FAQ"
     case news = "News"
-    
-    func getTitle() -> String {
+
+    var title: String {
         return self.rawValue
+    }
+    
+    var image: UIImage {
+        
+        switch self {
+        case .tables:
+            return UIImage(named: "icons8-table-50")!
+        case .map:
+            return UIImage(named: "icons8-world-map-50")!
+        case .charts:
+            return UIImage(named: "icons8-combo-chart-50")!
+        case .faq:
+            return UIImage(named: "icons8-faq-50")!
+        case .news:
+            return UIImage(named: "icons8-news-50")!
+        }
     }
 }
 
 class MenuCellViewModel: MenuCellViewModelType {
     
-    var imageName: String
     var title: MenuTitle
 
-    init(withTitle title: MenuTitle, andImageName imageName: String) {
+    init(withTitle title: MenuTitle) {
         
         self.title = title
-        self.imageName = imageName
     }
 }

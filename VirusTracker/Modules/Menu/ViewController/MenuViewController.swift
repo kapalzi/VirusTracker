@@ -10,17 +10,19 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MenuViewController: UIViewController, BindableType {
+class MenuViewController: UITableViewController {
 
-    @IBOutlet var tableView: UITableView!
     @IBOutlet var containerView: UIView!
     
     private let disposeBag = DisposeBag()
-    var viewModel: MenuViewModelType!
+    var viewModel: MenuViewModelType = MenuViewModel()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        tableView.delegate = nil
+        tableView.dataSource = nil
+        bindViewModel()
     }
     
     func bindViewModel() {

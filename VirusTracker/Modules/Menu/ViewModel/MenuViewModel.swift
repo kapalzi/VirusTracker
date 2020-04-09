@@ -17,15 +17,16 @@ class MenuViewModel: MenuViewModelType {
     
     var dataSource: BehaviorRelay<[MenuCellViewModelType]>
     
-    init(coordinator: SceneCoordinatorType) {
+//    init(coordinator: SceneCoordinatorType)
+    init() {
         
-        let cellModels = [MenuCellViewModel(withTitle: .tables, andImageName: "icons8-table-50"),
-                          MenuCellViewModel(withTitle: .map, andImageName: "icons8-world-map-50"),
-                          MenuCellViewModel(withTitle: .charts, andImageName: "icons8-combo-chart-50"),
-                          MenuCellViewModel(withTitle: .faq, andImageName: "icons8-faq-50"),
-                          MenuCellViewModel(withTitle: .news, andImageName: "icons8-news-50")]
+        let cellModels = [MenuCellViewModel(withTitle: .tables),
+                          MenuCellViewModel(withTitle: .map),
+                          MenuCellViewModel(withTitle: .charts),
+                          MenuCellViewModel(withTitle: .faq),
+                          MenuCellViewModel(withTitle: .news)]
         self.dataSource = BehaviorRelay<[MenuCellViewModelType]>(value: cellModels)
-        self.sceneCoordinator = coordinator
+        self.sceneCoordinator = SceneCoordinator()
         presentTables()
     }
     

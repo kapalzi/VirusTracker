@@ -15,9 +15,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        let sceneCoordinator = SceneCoordinator(window: window!)
-//        let tablesViewModel = TablesViewModel(BasicNetworkService())
-        let menuViewModel = MenuViewModel(coordinator: sceneCoordinator)
+        guard
+            let splitViewController = window?.rootViewController as? UISplitViewController,
+            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+            let masterViewController = leftNavController.viewControllers.first as? MenuViewController
+//            let detailViewController = (splitViewController.viewControllers.last as? UINavigationController)?.topViewController as? TablesViewController
+            else { fatalError() }
+            
+        
+        let sceneCoordinator = SceneCoordinator()//(window: window!)
+        let tablesViewModel = TablesViewModel(BasicNetworkService())
+        let menuViewModel = MenuViewModel()//(coordinator: sceneCoordinator)
         
         let firstScene = Scene.menu(menuViewModel)
         sceneCoordinator.transition(to: firstScene, type: .root)

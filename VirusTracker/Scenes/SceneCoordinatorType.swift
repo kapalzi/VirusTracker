@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol SceneCoordinatorType {
-    init(window: UIWindow)
+    init()
 
     /// transition to another scene
     @discardableResult
