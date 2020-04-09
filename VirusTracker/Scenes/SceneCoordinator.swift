@@ -12,49 +12,67 @@ import RxCocoa
 
 class SceneCoordinator: SceneCoordinatorType {
 
-  fileprivate var window: UIWindow
-  fileprivate var currentViewController: UIViewController
+    fileprivate var window: UIWindow
+    fileprivate var currentViewController: UIViewController
+    var lastContainer: UIViewController? = nil
 
-  required init(window: UIWindow) {
-    self.window = window
-    currentViewController = window.rootViewController!
-  }
-
-  static func actualViewController(for viewController: UIViewController) -> UIViewController {
-    if let navigationController = viewController as? UINavigationController {
-      return navigationController.viewControllers.first!
-    } else {
-      return viewController
+    required init(window: UIWindow) {
+        self.window = window
+        currentViewController = window.rootViewController!
     }
-  }
 
-  @discardableResult
-  func transition(to scene: Scene, type: SceneTransitionType) -> Completable {
-    let subject = PublishSubject<Void>()
-    let viewController = scene.viewController()
-    switch type {
-      case .root:
-        currentViewController = SceneCoordinator.actualViewController(for: viewController)
-        window.rootViewController = viewController
-        subject.onCompleted()
+    static func actualViewController(for viewController: UIViewController) -> UIViewController {
 
-      case .push:
-        guard let navigationController = currentViewController.navigationController else {
-          fatalError("Can't push a view controller without a current navigation controller")
+        if let navigationController = viewController as? UINavigationController {
+          return navigationController.viewControllers.first!
+        } else {
+          return viewController
         }
-        // one-off subscription to be notified when push complete
-        _ = navigationController.rx.delegate
-            .sentMessage(#selector(UINavigationControllerDelegate.navigationController(_:didShow:animated:)))
-            .map { _ in }
-            .bind(to: subject)
-        navigationController.pushViewController(viewController, animated: true)
-        currentViewController = SceneCoordinator.actualViewController(for: viewController)
+    }
 
-      case .modal:
-        currentViewController.present(viewController, animated: true) {
-          subject.onCompleted()
-        }
-        currentViewController = SceneCoordinator.actualViewController(for: viewController)
+    @discardableResult
+    func transition(to scene: Scene, type: SceneTransitionType) -> Completable {
+        
+        let subject = PublishSubject<Void>()
+        let viewController = scene.viewController()
+        switch type {
+            case .root:
+                currentViewController = SceneCoordinator.actualViewController(for: viewController)
+                window.rootViewController = viewController
+                subject.onCompleted()
+
+            case .push:
+                guard let navigationController = currentViewController.navigationController else {
+                  fatalError("Can't push a view controller without a current navigation controller")
+                }
+                // one-off subscription to be notified when push complete
+                _ = navigationController.rx.delegate
+                    .sentMessage(#selector(UINavigationControllerDelegate.navigationController(_:didShow:animated:)))
+                    .map { _ in }
+                    .bind(to: subject)
+                navigationController.pushViewController(viewController, animated: true)
+                currentViewController = SceneCoordinator.actualViewController(for: viewController)
+
+            case .modal:
+                currentViewController.present(viewController, animated: true) {
+                  subject.onCompleted()
+                }
+                currentViewController = SceneCoordinator.actualViewController(for: viewController)
+            
+            case .container:
+                
+                guard let menuViewController = currentViewController as? MenuViewController else { fatalError("dupa") }
+                
+                if let visibleContainer = lastContainer {
+                    menuViewController.containerView = nil
+                    visibleContainer.removeFromParent()
+                    visibleContainer.view.removeFromSuperview()
+                }
+                lastContainer = viewController
+                currentViewController.addChild(viewController)
+                currentViewController = SceneCoordinator.actualViewController(for: viewController)
+        
+        
     }
     return subject.asObservable()
         .take(1)

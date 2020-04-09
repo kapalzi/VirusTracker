@@ -7,9 +7,11 @@
 //
 
 import RxCocoa
+import Action
 
 protocol MenuViewModelType: class {
     
     var dataSource: BehaviorRelay<[MenuCellViewModelType]> { get }
+    var presentViewAction: Action<MenuCellViewModel, Never> { get }
 //    Immutable property requirement must be declared as 'var' with a '{ get }' specifier
 }

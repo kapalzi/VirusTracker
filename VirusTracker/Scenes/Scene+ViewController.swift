@@ -19,16 +19,13 @@ extension Scene {
             vc.bindViewModel(to: viewModel)
             return vc
             
-        case .tables(let viewModel):
-            var vc = storyboard.instantiateViewController(withIdentifier: "TablesViewController") as! TablesViewController
-            vc.bindViewModel(to: viewModel)
+        case .tables(_):
+            let vc = storyboard.instantiateViewController(withIdentifier: "TablesViewController") as! TablesViewController
             return vc
             
-        case .map(let viewModel):
-            let nc = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! UINavigationController
-            var vc = nc.viewControllers.first as! MapViewController
-            vc.bindViewModel(to: viewModel)
-            return nc
+        case .map(_):
+            let vc = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+            return vc
         }
     }
 }

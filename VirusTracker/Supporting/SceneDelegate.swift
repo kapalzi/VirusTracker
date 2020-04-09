@@ -16,9 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         let sceneCoordinator = SceneCoordinator(window: window!)
-        let tablesViewModel = TablesViewModel(BasicNetworkService())
+//        let tablesViewModel = TablesViewModel(BasicNetworkService())
+        let menuViewModel = MenuViewModel(coordinator: sceneCoordinator)
         
-        let firstScene = Scene.tables(tablesViewModel)
+        let firstScene = Scene.menu(menuViewModel)
         sceneCoordinator.transition(to: firstScene, type: .root)
         
         guard let _ = (scene as? UIWindowScene) else { return }

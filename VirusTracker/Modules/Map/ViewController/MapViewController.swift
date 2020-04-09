@@ -8,9 +8,8 @@
 
 import UIKit
 
-class MapViewController: UIViewController, BindableType {
-    
-    var viewModel: MapViewModelType!
+class MapViewController: UIViewController {
+    var viewModel: MapViewModelType = MapViewModel()
     
     override func viewDidLoad() {
         

@@ -16,8 +16,8 @@ struct BasicNetworkService: NetworkService {
       RxAlamofire
         .request(resource.action)
         .responseJSON()
-                .map {
-            return $0.data ?? Data() }
+        .map {
+            $0.data ?? Data() }
         .filter { $0 != nil }
         .map { $0! }
         .flatMap(resource.parse)

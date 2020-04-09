@@ -12,6 +12,8 @@ class MenuCell: UITableViewCell {
     
     @IBOutlet var iconImageView: UIImageView!
     @IBOutlet var titleLbl: UILabel!
+    
+    var viewModel: MenuCellViewModelType!
         
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,10 +33,11 @@ class MenuCell: UITableViewCell {
         }
     }
     
-    func configureWith(_ viewModel: MenuCellViewModelType) {
+    func configureWith(_ model: MenuCellViewModelType) {
         
+        viewModel = model
         iconImageView.image = UIImage(named: viewModel.imageName)?.withRenderingMode(.alwaysTemplate)
-        titleLbl.text = viewModel.title
+        titleLbl.text = viewModel.title.getTitle()
         selectionStyle = .none
         
         layoutIfNeeded()

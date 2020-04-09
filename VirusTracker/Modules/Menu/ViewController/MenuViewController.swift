@@ -13,6 +13,7 @@ import RxCocoa
 class MenuViewController: UIViewController, BindableType {
 
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var containerView: UIView!
     
     private let disposeBag = DisposeBag()
     var viewModel: MenuViewModelType!
@@ -37,6 +38,14 @@ class MenuViewController: UIViewController, BindableType {
                 return cell
             }
             .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .map { [unowned self] indexPath in
+                let cell = self.tableView.cellForRow(at: indexPath) as! MenuCell
+                return cell.viewModel as! MenuCellViewModel
+            }
+        .subscribe(viewModel.presentViewAction.inputs)
+        .disposed(by: disposeBag)
     
         let selectedCell = IndexPath(row: 0, section: 0)
         tableView.selectRow(at: selectedCell, animated: false, scrollPosition: .none)
