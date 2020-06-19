@@ -14,11 +14,14 @@ class SceneCoordinator: SceneCoordinatorType {
 
     fileprivate var window: UIWindow
     fileprivate var currentViewController: UIViewController
+    private let disposeBag = DisposeBag()
+    var rightNavigationController: UINavigationController
     var lastContainer: UIViewController? = nil
 
-    required init() {
-        self.window = UIWindow()
-        currentViewController = UIViewController()
+    required init(window: UIWindow, rightNavigationController: UINavigationController) {
+        self.window = window
+        self.currentViewController = window.rootViewController!
+        self.rightNavigationController = rightNavigationController
     }
 
     static func actualViewController(for viewController: UIViewController) -> UIViewController {
@@ -35,6 +38,7 @@ class SceneCoordinator: SceneCoordinatorType {
         
         let subject = PublishSubject<Void>()
         let viewController = scene.viewController()
+                
         switch type {
             case .root:
                 currentViewController = SceneCoordinator.actualViewController(for: viewController)
@@ -42,34 +46,18 @@ class SceneCoordinator: SceneCoordinatorType {
                 subject.onCompleted()
 
             case .push:
-                guard let navigationController = currentViewController.navigationController else {
-                  fatalError("Can't push a view controller without a current navigation controller")
-                }
-                // one-off subscription to be notified when push complete
-                _ = navigationController.rx.delegate
+                rightNavigationController.rx.delegate
                     .sentMessage(#selector(UINavigationControllerDelegate.navigationController(_:didShow:animated:)))
                     .map { _ in }
                     .bind(to: subject)
-                navigationController.pushViewController(viewController, animated: true)
+                    .disposed(by: disposeBag)
+                rightNavigationController.pushViewController(viewController, animated: true)
                 currentViewController = SceneCoordinator.actualViewController(for: viewController)
 
             case .modal:
                 currentViewController.present(viewController, animated: true) {
                   subject.onCompleted()
                 }
-                currentViewController = SceneCoordinator.actualViewController(for: viewController)
-            
-            case .container:
-                
-//                guard let menuViewController = currentViewController as? MenuViewController else { fatalError("dupa") }
-//                
-//                if let visibleContainer = lastContainer {
-//                    menuViewController.containerView = nil
-//                    visibleContainer.removeFromParent()
-//                    visibleContainer.view.removeFromSuperview()
-//                }
-                lastContainer = viewController
-                currentViewController.addChild(viewController)
                 currentViewController = SceneCoordinator.actualViewController(for: viewController)
         
         

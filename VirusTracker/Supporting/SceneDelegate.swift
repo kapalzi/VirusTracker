@@ -18,47 +18,39 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard
             let splitViewController = window?.rootViewController as? UISplitViewController,
             let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-            let masterViewController = leftNavController.viewControllers.first as? MenuViewController
-//            let detailViewController = (splitViewController.viewControllers.last as? UINavigationController)?.topViewController as? TablesViewController
+            let menuViewController = leftNavController.viewControllers.first as? MenuViewController,
+            let rightNavController = splitViewController.viewControllers.last as? UINavigationController
             else { fatalError() }
             
-        
-        let sceneCoordinator = SceneCoordinator()//(window: window!)
+        let sceneCoordinator = SceneCoordinator(window: window!, rightNavigationController: rightNavController)
         let tablesViewModel = TablesViewModel(BasicNetworkService())
-        let menuViewModel = MenuViewModel()//(coordinator: sceneCoordinator)
+        let menuViewModel = MenuViewModel(coordinator: sceneCoordinator)
+        menuViewController.viewModel = menuViewModel
         
-        let firstScene = Scene.menu(menuViewModel)
-        sceneCoordinator.transition(to: firstScene, type: .root)
+        let rightScene = Scene.tables(tablesViewModel)
+        sceneCoordinator.transition(to: rightScene, type: .push)
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
+
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
+
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+
     }
 
 

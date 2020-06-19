@@ -24,6 +24,8 @@ class TablesViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+//        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.2247756124, green: 0.2432734072, blue: 0.2733631134, alpha: 1)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         bindViewModel()
     }
     

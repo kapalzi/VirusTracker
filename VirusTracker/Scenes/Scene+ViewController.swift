@@ -14,9 +14,9 @@ extension Scene {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         switch self {
-        case .menu(_):
+        case .menu(let viewModel):
             let vc = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
-//            vc.bindViewModel(to: viewModel)
+            vc.viewModel = viewModel
             return vc
             
         case .tables(_):

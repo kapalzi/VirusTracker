@@ -17,8 +17,7 @@ class MenuViewModel: MenuViewModelType {
     
     var dataSource: BehaviorRelay<[MenuCellViewModelType]>
     
-//    init(coordinator: SceneCoordinatorType)
-    init() {
+    init(coordinator: SceneCoordinatorType) {
         
         let cellModels = [MenuCellViewModel(withTitle: .tables),
                           MenuCellViewModel(withTitle: .map),
@@ -26,21 +25,29 @@ class MenuViewModel: MenuViewModelType {
                           MenuCellViewModel(withTitle: .faq),
                           MenuCellViewModel(withTitle: .news)]
         self.dataSource = BehaviorRelay<[MenuCellViewModelType]>(value: cellModels)
-        self.sceneCoordinator = SceneCoordinator()
-        presentTables()
-    }
-    
-    func presentTables() {
-        
-        let tablesViewModel = TablesViewModel(BasicNetworkService())
-        sceneCoordinator.transition(to: .tables(tablesViewModel), type: .container)
+        self.sceneCoordinator = coordinator
     }
     
     lazy var presentViewAction: Action<MenuCellViewModel, Never> = { this in
         return Action<MenuCellViewModel, Never> { cellViewModel in
-            let mapViewModel = MapViewModel()
-            print("AAAAAAAAAAA")
-            return this.sceneCoordinator.transition(to: .map(mapViewModel), type: .container).asObservable()
+                    
+            switch cellViewModel.title {
+            case .tables:
+                let tablesViewModel = TablesViewModel(BasicNetworkService())
+                return this.sceneCoordinator.transition(to: .tables(tablesViewModel), type: .push).asObservable()
+            case .map:
+                let mapViewModel = MapViewModel()
+                return this.sceneCoordinator.transition(to: .map(mapViewModel), type: .push).asObservable()
+            case .charts:
+                let tablesViewModel = TablesViewModel(BasicNetworkService())
+                return this.sceneCoordinator.transition(to: .tables(tablesViewModel), type: .push).asObservable()
+            case .faq:
+                let tablesViewModel = TablesViewModel(BasicNetworkService())
+                return this.sceneCoordinator.transition(to: .tables(tablesViewModel), type: .push).asObservable()
+            case .news:
+                let tablesViewModel = TablesViewModel(BasicNetworkService())
+                return this.sceneCoordinator.transition(to: .tables(tablesViewModel), type: .push).asObservable()
+            }
         }
     }(self)
     
